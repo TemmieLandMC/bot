@@ -106,7 +106,7 @@ client.on("guildMemberAdd", async (member) => {
     if (member.guild.id == "900361487141441586") {
         member.roles.add("901533889326108752");
         member.roles.add("901534105357930537");
-        member.roles.add("901534707798376448");
+        member.roles.add("901534707798376448"); //asd
         member.guild.channels.get("900361599422967828").send({
             content: ``,
             embeds: [{
