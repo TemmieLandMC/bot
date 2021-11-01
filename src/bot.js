@@ -102,6 +102,23 @@ client.on("messageCreate", async (message) => {
     if (message.content.match(`^<@!?${client.user.id}>`)) return message.react("👋").catch(() => { });
 });
 
+client.on("guildMemberAdd", async (member) => {
+    if (member.guild.id == "900361487141441586") {
+        member.roles.add("901533889326108752");
+        member.roles.add("901534105357930537");
+        member.roles.add("901534707798376448");
+        member.guild.channels.get("900361599422967828").send({
+            content: ``,
+            embeds: [{
+                title: `Приветствую, ${member.user.username}`,
+                description: `Ты попал на сервер ${member.guild}. Он пока еще не открыт, рекомендую почитать информацию о нем в <#901138809121546310>`,
+                timestamp: new Date(),
+                footer: `{ text: ${member.user.username}`,
+                icon_url: member.user.avatarURL()
+            }]
+        })
+    })
+
 const updatePresence = async () => {
     const gc = await client.shard.broadcastEval(bot => bot.guilds.cache.size).then(res => res.reduce((prev, cur) => prev + cur, 0));
     let name = `TemmieLand`;
