@@ -117,7 +117,8 @@ client.on("guildMemberAdd", async (member) => {
                 icon_url: member.user.avatarURL()
             }]
         })
-    })
+    }
+})
 
 const updatePresence = async () => {
     const gc = await client.shard.broadcastEval(bot => bot.guilds.cache.size).then(res => res.reduce((prev, cur) => prev + cur, 0));
