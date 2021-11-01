@@ -2,6 +2,6 @@ module.exports = {
     token: "",
     database_uri: "",
     admins: [],
-    prefix: "",
+    prefix: "t!",
     shards: 1
 };
