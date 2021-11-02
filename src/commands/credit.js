@@ -67,6 +67,7 @@ module.exports.run = async (interaction = new CommandInteraction()) => {
             if (credit == 0) return interaction.reply({ content: `❌ У вас нет задолжности.`, ephemeral: true, });
             if (amountq > credit) return interaction.reply({ content: `❌ Кол-во денег, которое вы хотите выплатить больше, чем ваша задолжность.`, ephemeral: true, });
             if (amountq > money) return interaction.reply({ content: `❌ Кол-во денег, которое вы хотите выплатить больше, чем ваш баланс.`, ephemeral: true, });
+            if (amountq < 1) return interaction.reply({ content: `❌ Кол-во денег, которое вы хотите выплатить не может быть меньше, чем 1.`, ephemeral: true, });
             logChannel.send(`✅ ${interaction.user.toString()} выплатил ${amountq}.`)
             gdb.setOnObject("credits", interaction.user.id, credit - amountq);
             gdb.setOnObject("money", interaction.user.id, money - amountq);
