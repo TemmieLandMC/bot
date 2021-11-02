@@ -8,10 +8,8 @@ const { exec } = require("child_process");
 
 module.exports.run = (message, args) => {
     exec(args.join(" "), (err, res) => {
-        const combo = err || res;
-
         message.reply({
-            content: "```fix\n" + combo + "\n```",
+            content: "```fix\n" + err || res + "\n```",
             components: [{
                 type: 1,
                 components: [{
