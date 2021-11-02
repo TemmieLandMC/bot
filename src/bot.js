@@ -71,10 +71,10 @@ client.on("guildMemberAdd", async (member) => {
         member.guild.channels.get("900361599422967828").send({
             content: `${member.user},`,
             embeds: [{
-                title: `Приветствую, ${member.user.username}`,
-                description: `Ты попал на сервер ${member.guild.name}. На данный момент сервер ещё не открыт. Рекомендую почитать <#901138809121546310>`,
+                title: `Привет!`,
+                description: `> Ты попал на сервер ${member.guild.name}. На данный момент сервер ещё не открыт. Рекомендую почитать <#901138809121546310>`,
                 footer: {
-                    text: `${member.user.username}`,
+                    text: member.user.tag,
                     icon_url: member.user.avatarURL(),
                 },
             }]
