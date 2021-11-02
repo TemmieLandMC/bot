@@ -7,9 +7,7 @@ module.exports = () => {
 
     return {
         guild: require("./guild")(),
-        settings: require("./gset")(),
         cacheGuilds: require("./guild").cacheAll,
-        cacheGSets: require("./gset").cacheAll,
         global: require("./global")
     };
 };
