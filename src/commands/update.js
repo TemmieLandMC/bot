@@ -1,7 +1,7 @@
 module.exports = {
     name: "update",
     permissionRequired: 4,
-    slash: true,
+    slash: true
 };
 
 const { exec } = require("child_process");
