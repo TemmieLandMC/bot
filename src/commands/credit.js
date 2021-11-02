@@ -56,6 +56,7 @@ module.exports.run = async (interaction = new CommandInteraction()) => {
         case "take":
             const amount = interaction.options.getInteger("amount");
             if (credit != 0) return interaction.reply({ content: `❌ Вы уже взяли кредит, обратитесь в банк, чтобы взять еще один.`, ephemeral: true, });
+            if (amount < 1) return interaction.reply({ content: `❌ Сумма кредита не может быть меньше 1.`, ephemeral: true, });
             if ((money * 10) < amount || amount > 1000) return interaction.reply({ content: `❌ Слишком большая сумма, чтобы получить кредит, обратитесь в банк.`, ephemeral: true, });
             gdb.setOnObject("credits", interaction.user.id, credit + amount + 10);
             gdb.setOnObject("money", interaction.user.id, money + amount);
