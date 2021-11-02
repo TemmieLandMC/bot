@@ -53,7 +53,6 @@ module.exports.run = async (interaction = new CommandInteraction()) => {
             if (gdb.get().money[toMember] == undefined) return interaction.reply({ content: "❌ Человек не имеет кошелька, чтобы его зарегестрировать, необходимо написать команду **`/money view`**", ephemeral: true, });
             gdb.setOnObject("money", interaction.user.id, money - toPay);
             gdb.setOnObject("money", toMember, gdb.get().money[toMember] + toPay);
-            global.error = ""
             if (gdb.get().notifyOff[toMember]) {
                 toMemberObj.send(`⚠️ ${interaction.user.username}#${interaction.user.discriminator} перевёл вам ${toPay} TLов`).catch((err) => { error = ` ⚠️ Сообщение не было отправлено: ${toMemberObj.toString()}(${toMember}) ${err.toString()}`; interaction.guild.channels.cache.get(logChannel).send(error) })
             }

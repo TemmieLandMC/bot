@@ -69,13 +69,17 @@ client.on("messageCreate", async (message) => {
 
 client.on("guildMemberAdd", async (member) => {
     if (member.guild.id == "900361487141441586") {
-        member.roles.add(["901533889326108752", "901534105357930537", "901534707798376448"]);
-        member.guild.channels.cache.get("900361599422967828").send({
+        member.roles.add(["901533889326108752", "901534707798376448", "901534105357930537"]);
+        member.guild.channels.get("900361599422967828").send({
+            content: `${member.user.toString()},`,
             embeds: [{
                 title: `Приветствую, ${member.user.username}`,
                 description: `Ты попал на сервер ${member.guild}. Он пока еще не открыт, рекомендую почитать информацию о нем в <#901138809121546310>`,
-                footer: `{ text: ${member.user.username}`,
-                icon_url: member.user.avatarURL()
+                timestamp: new Date(),
+                footer: {
+                    text: `${member.user.username}`,
+                    icon_url: member.user.avatarURL(),
+                },
             }]
         });
     };
@@ -88,13 +92,13 @@ const updatePresence = async () => {
     });
 };
 
-client.on("error", (err) => console.error(`${shard} Client error. ${err}`));
+client.on("error", (err) => console.error(`${shard} Client error.${err}`));
 client.on("rateLimit", (rateLimitInfo) => console.warn(`${shard} Rate limited.\n${JSON.stringify(rateLimitInfo)}`));
-client.on("shardDisconnected", (closeEvent) => console.warn(`${shard} Disconnected. ${closeEvent}`));
-client.on("shardError", (err) => console.error(`${shard} Error. ${err}`));
+client.on("shardDisconnected", (closeEvent) => console.warn(`${shard} Disconnected.${closeEvent}`));
+client.on("shardError", (err) => console.error(`${shard} Error.${err}`));
 client.on("shardReconnecting", () => console.log(`${shard} Reconnecting.`));
-client.on("shardResume", (_, replayedEvents) => console.log(`${shard} Resumed. ${replayedEvents} replayed events.`));
-client.on("warn", (info) => console.warn(`${shard} Warning. ${info}`));
+client.on("shardResume", (_, replayedEvents) => console.log(`${shard} Resumed.${replayedEvents} replayed events.`));
+client.on("warn", (info) => console.warn(`${shard} Warning.${info}`));
 client.login(config.token);
 
 process.on("unhandledRejection", (rej) => console.error(rej));
