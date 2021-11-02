@@ -1,6 +1,6 @@
 module.exports = {
     name: "admincredit",
-    permissionRequired: 0,
+    permissionRequired: 1,
     slash: true,
     opts: [
         {
@@ -40,30 +40,28 @@ module.exports = {
 
 const { CommandInteraction } = require("discord.js");
 const db = require("../database/")();
-const { getPermissionLevel } = require("../constants")
 
 module.exports.run = async (interaction = new CommandInteraction()) => {
     const gdb = await db.guild(interaction.guildId);
-    const toPay = interaction.options.getMember("member")
-    const bankRole = gdb.get().settings.bankRole;
+    const toPay = interaction.options.getMember("member");
     const logChannel = interaction.guild.channels.cache.get(gdb.get().settings.logChannel);
-    if (interaction.member.roles.cache.has(bankRole) || getPermissionLevel(interaction.member) > 0) {
-        const money = gdb.get().money[toPay.id]
-        if (gdb.get().credits[toPay.id] == undefined) {
-            gdb.setOnObject("credits", toPay.id, 0)
-        }
-        const credit = gdb.get().credits[toPay.id]
-        if (money == undefined || money == null) return interaction.reply({ content: "❌ Человек не имеет кошелька, чтобы его зарегестрировать, необходимо написать команду **`/money view`**", ephemeral: true, });
-        switch (interaction.options.getSubcommand()) {
-            case "view":
-                if (credit == 0) return interaction.reply({ content: `❌ У человека нет задолжности.`, ephemeral: true, });
-                return interaction.reply({ content: `ℹ️ Задолжность ${toPay.username} - ${credit}.`, ephemeral: true, });
-            case "give":
-                const amount = interaction.options.getInteger("amount")
-                gdb.setOnObject("credits", toPay.id, credit + amount + 10);
-                gdb.setOnObject("money", toPay.id, money + amount);
-                logChannel.send(`✅ Кредит на ${amount} TLoв выдан игроку ${toPay.toString()}.`)
-                return interaction.reply({ content: `✅ Кредит на ${amount} TLoв выдан.`, ephemeral: true, });
-        }
-    } return await interaction.reply({ content: "❌ Недостаточно прав.", ephemeral: true, });
-}
+    const money = gdb.get().money[toPay.id];
+    if (!gdb.get().money[user.id]) return interaction.reply({
+        content: "❌ Человек, которому Вы хотите передать деньги, не имеет кошелька.",
+        ephemeral: true
+    });
+    if (!gdb.get().credits[toPay.id]) gdb.setOnObject("credits", toPay.id, 0);
+    const credit = gdb.get().credits[toPay.id];
+
+    switch (interaction.options.getSubcommand()) {
+        case "view":
+            if (credit == 0) return interaction.reply({ content: `❌ У человека нет задолжности.`, ephemeral: true });
+            return interaction.reply({ content: `ℹ️ Задолжность ${toPay.username} - ${credit}.`, ephemeral: true });
+        case "give":
+            const amount = interaction.options.getInteger("amount");
+            gdb.setOnObject("credits", toPay.id, credit + amount + 10);
+            gdb.setOnObject("money", toPay.id, money + amount);
+            logChannel.send(`✅ Кредит на ${amount} TLoв выдан игроку ${toPay}.`);
+            return interaction.reply({ content: `✅ Кредит на ${amount} TLoв выдан.`, ephemeral: true });
+    };
+};
