@@ -1,19 +1,17 @@
-const { Message } = require("discord.js");
-
 module.exports = {
 	aliases: ["evaluate", "ev"],
 	permissionRequired: 4,
 	checkArgs: (args) => !!args.length
 };
 
-module.exports.run = async (message = new Message, args) => {
+module.exports.run = async (message, args) => {
 	let content = args.join(" ");
 
 	try {
 		let evaled = await eval(content);
 		if (typeof evaled !== "string") evaled = require("util").inspect(evaled);
 
-		if (evaled.length > 2000) message.react("✅").catch();
+		if (evaled.length > 2000) message.react("✅");
 		else message.reply({
 			content: "```js\n" + evaled + "\n```",
 			components: [{
@@ -21,7 +19,6 @@ module.exports.run = async (message = new Message, args) => {
 				components: [{
 					type: 2,
 					emoji: {
-						id: null,
 						name: "🗑"
 					},
 					style: 4,
@@ -41,7 +38,6 @@ module.exports.run = async (message = new Message, args) => {
 				components: [{
 					type: 2,
 					emoji: {
-						id: null,
 						name: "🗑"
 					},
 					style: 4,

@@ -15,7 +15,6 @@ const client = new Discord.Client({
 });
 const db = require("./database/")();
 const { deleteMessage } = require("./handlers/utils");
-require("discord-logs")(client);
 
 global.sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 global.msToTime = require("./constants/").msToTime;
@@ -64,7 +63,6 @@ client.on("messageCreate", async (message) => {
     global.gdb = gdb;
     global.gldb = db.global;
     if (message.content.startsWith(config.prefix) || message.content.match(`^<@!?${client.user.id}> `)) return commandHandler(message, config.prefix, gdb, db);
-    if (message.content.match(`^<@!?${client.user.id}>`)) return message.react("👋").catch(() => { });
 });
 
 client.on("guildMemberAdd", async (member) => {
@@ -73,11 +71,10 @@ client.on("guildMemberAdd", async (member) => {
         member.guild.channels.cache.get("900361599422967828").send({
             content: `${member.user},`,
             embeds: [{
-                title: `Приветствую, ${member.user.username}`,
-                description: `Ты попал на сервер ${member.guild}. Он пока еще не открыт, рекомендую почитать информацию о нем в <#901138809121546310>`,
-                timestamp: new Date(),
+                title: `Привет!`,
+                description: `> Ты попал на сервер ${member.guild.name}. На данный момент сервер ещё не открыт. Рекомендую почитать <#901138809121546310>`,
                 footer: {
-                    text: `${member.user.tag}`,
+                    text: member.user.tag,
                     icon_url: member.user.avatarURL(),
                 },
             }]
@@ -92,13 +89,7 @@ const updatePresence = async () => {
     });
 };
 
-client.on("error", (err) => console.error(`${shard} Client error.${err}`));
 client.on("rateLimit", (rateLimitInfo) => console.warn(`${shard} Rate limited.\n${JSON.stringify(rateLimitInfo)}`));
-client.on("shardDisconnected", (closeEvent) => console.warn(`${shard} Disconnected.${closeEvent}`));
-client.on("shardError", (err) => console.error(`${shard} Error.${err}`));
-client.on("shardReconnecting", () => console.log(`${shard} Reconnecting.`));
-client.on("shardResume", (_, replayedEvents) => console.log(`${shard} Resumed.${replayedEvents} replayed events.`));
-client.on("warn", (info) => console.warn(`${shard} Warning.${info}`));
 client.login(config.token);
 
 process.on("unhandledRejection", (rej) => console.error(rej));

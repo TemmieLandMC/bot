@@ -5,7 +5,7 @@ module.exports = {
         {
             name: "get",
             description: "Получить ваши настройки.",
-            type: 1,
+            type: 1
         },
         {
             name: "toggle",
@@ -20,20 +20,20 @@ module.exports = {
                     choices: [
                         {
                             name: "Получение уведомлений о переводе денег.",
-                            value: "notifyOff",
-                        },
-                    ],
-                },
-            ],
-        },
+                            value: "notifyOff"
+                        }
+                    ]
+                }
+            ]
+        }
     ],
-    slash: true,
+    slash: true
 };
 
-const { CommandInteraction, MessageEmbed } = require("discord.js");
+const { CommandInteraction } = require("discord.js");
 const db = require("../database/")();
 
-module.exports.run = async (interaction = new CommandInteraction()) => {
+module.exports.run = async (interaction = new CommandInteraction) => {
     const gdb = await db.guild(interaction.guild.id);
     switch (interaction.options.getSubcommand()) {
         case "get":
@@ -45,34 +45,28 @@ module.exports.run = async (interaction = new CommandInteraction()) => {
                         fields: [
                             {
                                 name: "Получение уведомлений при переводе денег.",
-                                value: gdb.get().notifyOff[interaction.user.id]
-                                    ? "<:online:893963786174746664> **`Включено`**"
-                                    : "<:dnd:893963746345615400> **`Выключено`**",
-                                inline: true,
-                            },
-                        ],
-                    },
-                ],
+                                value: gdb.get().notifyOff[interaction.user.id] ?
+                                    "**`Включено`**" :
+                                    "**`Выключено`**",
+                                inline: true
+                            }
+                        ]
+                    }
+                ]
             });
         case "toggle":
             let idk = "";
             if (interaction.options.getString("setting") == "notifyOff") {
-                gdb.get().notifyOff[interaction.user.id]
-                    ? (() => {
+                gdb.get().notifyOff[interaction.user.id] ?
+                    (() => {
                         gdb.setOnObject("notifyOff", interaction.user.id, false);
-                        idk =
-                            "<:dnd:893963746345615400>**`Получение уведомлений при переводе денег`** было выключено.";
-                    })()
-                    : (() => {
+                        idk = "**`Получение уведомлений при переводе денег`** было выключено.";
+                    })() :
+                    (() => {
                         gdb.setOnObject("notifyOff", interaction.user.id, true);
-                        idk =
-                            "<:online:893963786174746664>**`Получение уведомлений при переводе денег`** былo включено.";
-                    })()
-            }
-            if (idk != undefined) {
-                return await interaction.reply(idk);
-            } else {
-                return await interaction.reply("❌ Произошла ошибка, ничего не изменилось.");
-            }
-    }
+                        idk = "**`Получение уведомлений при переводе денег`** былo включено.";
+                    })();
+            };
+            return interaction.reply(idk);
+    };
 };

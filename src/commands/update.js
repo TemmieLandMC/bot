@@ -1,13 +1,13 @@
 module.exports = {
     name: "update",
     permissionRequired: 4,
-    slash: true,
+    slash: true
 };
 
 const { exec } = require("child_process");
-const { Interaction, Client } = require("discord.js");
+const { CommandInteraction } = require("discord.js");
 
-module.exports.run = async (interaction = new Interaction()) => {
+module.exports.run = async (interaction = new CommandInteraction) => {
     exec("git stash push --include-untracked");
     exec("git pull", (error, stdout) => {
         exec("git stash drop");
@@ -15,19 +15,12 @@ module.exports.run = async (interaction = new Interaction()) => {
 
         if (stdout.includes("Already up to date.")) {
             interaction.reply({
-                content: "Bot already up to date. No changes since last pull.",
-                ephemeral: true,
+                content: "Bot already up to date. No changes since last pull."
             });
         } else {
-            interaction
-                .reply({
-                    content:
-                        "Pulled from GitHub. Restarting the bot.\n\nLogs:\n```\n" +
-                        stdout +
-                        "\n```",
-                    ephemeral: true,
-                })
-                .then((() => { process.exit(); exec("node --trace-warnings index.js") }));
-        }
+            interaction.reply({
+                content: "Pulled from GitHub. Restarting the bot.\n\nLogs:\n```\n" + stdout + "\n```"
+            }).then(() => process.exit());
+        };
     });
 };
