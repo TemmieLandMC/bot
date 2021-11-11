@@ -77,6 +77,7 @@ client.on("guildMemberAdd", async (member) => {
                     text: member.user.tag,
                     icon_url: member.user.avatarURL(),
                 },
+                timestamp: new Date(),
             }]
         });
     };
