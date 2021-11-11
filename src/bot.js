@@ -70,14 +70,14 @@ client.on("messageCreate", async (message) => {
 client.on("guildMemberAdd", async (member) => {
     if (member.guild.id == "900361487141441586") {
         member.roles.add(["901533889326108752", "901534707798376448", "901534105357930537"]);
-        member.guild.channels.get("900361599422967828").send({
-            content: `${member.user.toString()},`,
+        member.guild.channels.cache.get("900361599422967828").send({
+            content: `${member.user},`,
             embeds: [{
                 title: `Приветствую, ${member.user.username}`,
                 description: `Ты попал на сервер ${member.guild}. Он пока еще не открыт, рекомендую почитать информацию о нем в <#901138809121546310>`,
                 timestamp: new Date(),
                 footer: {
-                    text: `${member.user.username}`,
+                    text: `${member.user.tag}`,
                     icon_url: member.user.avatarURL(),
                 },
             }]
