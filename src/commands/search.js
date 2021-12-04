@@ -18,6 +18,21 @@ const axios = require("axios");
 module.exports.run = async (interaction = new CommandInteraction) => {
     const query = interaction.options.getString("query");
     axios.get("https://google.com/search", { params: { "q": query } }).then(r => {
-        interaction.reply("https://google.com" + r.request.path)
+        interaction.reply({
+            content: "✅ Ваш запрос: ",
+            "components": [
+                {
+                    "type": 1,
+                    "components": [
+                        {
+                            type: 2,
+                            "label": "Ссылка",
+                            "style": 5,
+                            "url": "https://google.com" + r.request.path
+                        }
+                    ]
+                }
+            ]
+        })
     })
 };
