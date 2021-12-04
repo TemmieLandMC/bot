@@ -29,6 +29,14 @@ module.exports.run = async (interaction = new CommandInteraction) => {
                             "label": "Ссылка",
                             "style": 5,
                             "url": "https://google.com" + r.request.path
+                        },
+                        {
+                            type: 2,
+                            emoji: {
+                                name: "🗑"
+                            },
+                            style: 4,
+                            custom_id: "reply:delete"
                         }
                     ]
                 }
