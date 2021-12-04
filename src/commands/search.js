@@ -6,7 +6,8 @@ module.exports = {
         {
             name: "query",
             description: "Что вы хотите найти",
-            type: 3
+            type: 3,
+            required: true,
         },
     ]
 };
@@ -15,7 +16,8 @@ const { CommandInteraction } = require("discord.js");
 const axios = require("axios");
 
 module.exports.run = async (interaction = new CommandInteraction) => {
-    axios.get("https://google.com/search", { params: { "q": "asd" } }).then(r => {
+    const query = interaction.getString("query");
+    axios.get("https://google.com/search", { params: { "q": query } }).then(r => {
         interaction.reply("https://google.com" + r.request.path)
     })
 };
