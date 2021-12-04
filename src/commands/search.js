@@ -27,7 +27,7 @@ module.exports.run = async (interaction = new CommandInteraction) => {
                         {
                             type: 2,
                             "label": "Ссылка",
-                            "style": 1,
+                            "style": 5,
                             "url": "https://google.com" + r.request.path
                         },
                         {
