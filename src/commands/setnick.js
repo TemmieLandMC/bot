@@ -29,6 +29,6 @@ module.exports.run = async (interaction) => {
     const member = await interaction.guild.members.fetch(user.id);
 
     gdb.setOnObject("nicknames", user.id, nick);
-    await member.setNickname(member.displayName.substring(0, 29 - nick.length) + ` | ${nick}`).catch(() => { });
+    await member.setNickname(user.username.substring(0, 29 - nick.length) + ` | ${nick}`).catch(() => { });
     interaction.reply(`set \`${user.id}\` on object \`nicknames\` with data \`${nick}\``);
 };
