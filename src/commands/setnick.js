@@ -23,7 +23,7 @@ const db = require("../database/")();
 
 module.exports.run = async (interaction) => {
     if (!(interaction instanceof CommandInteraction)) return;
-    const gdb = await db.global();
+    const gdb = db.global;
     const user = interaction.options.getUser("member");
     const nick = interaction.options.getString("nick");
     const member = await interaction.guild.members.fetch(user.id);
