@@ -72,7 +72,7 @@ client.on("guildMemberAdd", async (member) => {
             content: `${member.user},`,
             embeds: [{
                 title: `Привет!`,
-                description: `> Ты попал на сервер ${member.guild.name}. На данный момент сервер ещё не открыт. Рекомендую почитать <#901138809121546310>`,
+                description: `> Ты попал на сервер ${member.guild.name}. Рекомендую почитать <#901138809121546310>`,
                 footer: {
                     text: member.user.tag,
                     icon_url: member.user.avatarURL(),
