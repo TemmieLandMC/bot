@@ -6,8 +6,8 @@ module.exports = async (message = new Message(), prefix, gdb, db) => {
     let content;
     if (message.content.match(`^<@!?${client.user.id}> `)) content = message.content.split(" ").slice(1);
     else content = message.content.slice(prefix.length).split(" ");
-    const commandOrAlias = content.shift().toLowerCase(),
-        commandName = aliases.get(commandOrAlias) || commandOrAlias;
+    const commandOrAlias = content.shift().toLowerCase();
+    const commandName = aliases.get(commandOrAlias) || commandOrAlias;
     content = content.join(" ");
 
     const processCommand = async () => {
